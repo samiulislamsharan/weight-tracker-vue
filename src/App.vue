@@ -24,6 +24,18 @@ const addWeight = () => {
 watch(weights, newWeights => {
   const ws = [...newWeights]
 
+  if (weightCart.value) {
+    weightCart.value.data.labels = ws
+      .sort((a, b) => a.date - b.date)
+      .map(w => new Date(w.date).toLocaleDateString())
+
+    weightCart.value.data.datasets[0].data = ws
+      .sort((a, b) => a.date - b.date)
+      .map(w => w.weight)
+
+    weightCart.value.update()
+  }
+
   nextTick(() => {
     // console.log(weighChartEl)
 
